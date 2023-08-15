@@ -1,0 +1,140 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import sympy
+import math
+
+#Functions used later in the code
+
+#Rotates mat a degrees about the x-axis
+def rotate_x(mat, a):
+    xR = np.array([[1 , 0           , 0           , 0],
+                   [0 , math.cos(a) ,-math.sin(a) , 0], 
+                   [0 , math.sin(a) , math.cos(a) , 0],
+                   [0 , 0           , 0           , 1]])
+    
+    return np.matmul(xR, mat)
+
+#Rotates mat a degrees about the y-axis
+def rotate_y(mat, a):
+    yR = np.array([[math.cos(a) ,0     ,-math.sin(a) , 0],
+                   [0           ,1     , 0           , 0], 
+                   [math.sin(a) ,0     , math.cos(a) , 0],
+                   [0           ,0     , 0           , 1]])
+    
+    return np.matmul(yR, mat)
+
+#Rotates mat a degrees about the z-axis
+def rotate_z(mat, a):
+    zR = np.array([[math.cos(a) ,-math.sin(a) , 0 , 0],
+                   [math.sin(a) , math.cos(a) , 0 , 0], 
+                   [0           , 0           , 1 , 0],
+                   [0           , 0           , 0 , 1]])
+    
+    return np.matmul(zR, mat)
+
+#Projects mat with center at (b,c,d)
+def project(mat, b, c, d):
+    P = np.array([[1 ,0 ,-b/d ,0],
+                  [0 ,1 ,-c/d ,0],
+                  [0 ,0 , 0   ,0],
+                  [0 ,0 ,-1/d ,1]])
+    
+    return np.matmul(P, mat)
+
+#Zooms in on mat by p percent
+def zoom(mat, p):
+    Z = np.array([[p/100 ,0     ,0     ,0],
+                  [0     ,p/100 ,0     ,0],
+                  [0     ,0     ,p/100 ,0],
+                  [0     ,0     ,0     ,1]])
+
+    return np.matmul(Z, mat)
+
+#Maps mat onto a two-dimensonal plane
+def dim(mat):
+    for i in range(len(mat[0])):
+        for j in range(len(mat)):
+            mat[j,i] /= mat[len(mat)-1,i]
+
+#Draws mat on plot ax
+def draw(mat,ax):
+    for i in range(len(adj)):
+        for j in range(i):
+            if (adj[i,j] == 1):
+                ax.plot([mat[0,i],mat[0,j]],[mat[1,i],mat[1,j]],'b')
+
+
+
+#Matrix representing the 1983 Toyota Corolla
+T = np.array([[-6.5, -6.5, -6.5, -6.5, -2.5, -2.5, -0.75, -0.75,  3.25, 3.25,  4.5, 4.5,  6.5, 6.5,  6.5,  6.5],
+              [-2  , -2  ,  0.5,  0.5,  0.5,  0.5,  2   ,  2   ,  2   , 2   ,  0.5, 0.5,  0.5, 0.5, -2  , -2  ],
+              [-2.5,  2.5,  2.5, -2.5, -2.5,  2.5, -2.5 ,  2.5 , -2.5 , 2.5 , -2.5, 2.5, -2.5, 2.5,  2.5, -2.5],
+              [ 1  ,  1  ,  1  ,  1  ,  1  ,  1  ,  1   ,  1   ,  1   , 1   ,  1  , 1  ,  1  , 1  ,  1  ,  1  ]
+              ])
+
+#Adjacency matrix for the Toyota
+adj = np.array([[0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1],
+                [1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0],
+                [0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0],
+                [1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0],
+                [0,0,1,0,1,0,0,1,0,0,0,0,0,0,0,0],
+                [0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0],
+                [0,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0],
+                [0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0], 
+                [0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0], 
+                [0,0,0,0,0,0,0,0,1,0,0,1,1,0,0,0],
+                [0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0], 
+                [0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1],
+                [0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0],
+                [0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1],
+                [1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0]
+                ])
+
+
+
+#Projects with center at (-5,10,10)
+mat1 = project(T,-5,10,10)
+f, ax1 = plt.subplots(1)
+dim(mat1)
+draw(mat1, ax1)
+plt.xlim(-8,16)
+plt.ylim(-8,8)
+
+#Projects with center at (0,10,25)
+mat2 = project(T,0,10,25)
+f, ax2 = plt.subplots(1)
+dim(mat2)
+draw(mat2, ax2)
+plt.xlim(-20,20)
+plt.ylim(-8,8)
+
+#Rotates 30 degrees about the y-axis then projects with center at (0,10,25)
+mat3 = rotate_y(T,math.pi/6)
+mat3 = project(mat3,0,10,25)
+f, ax3 = plt.subplots(1)
+dim(mat3)
+draw(mat3, ax3)
+plt.xlim(-8,16)
+plt.ylim(-8,8)
+
+#Rotates 45 degrees about the z-sxis then projects with center at (0,10,25)
+mat4 = rotate_z(T,math.pi/4)
+mat4 = project(mat4,0,10,25)
+f, ax4 = plt.subplots(1)
+dim(mat4)
+draw(mat4, ax4)
+plt.xlim(-8,16)
+plt.ylim(-8,8)
+
+#Zooms in by 150% then projects with center at (0,10,25)
+mat5 = zoom(T,150)
+mat5 = project(mat5,0,10,25)
+f, ax5 = plt.subplots(1)
+dim(mat5)
+draw(mat5, ax5)
+plt.xlim(-20,20)
+plt.ylim(-8,8)
+
+#Plots all 5 matrices
+plt.show()
