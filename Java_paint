@@ -1,0 +1,55 @@
+import java.util.Scanner;
+
+public class Paint 
+{
+
+	public static void main(String[] args) 
+	{
+		final int COVERAGE = 350; // Paint covers 350 sq ft/gal 
+		final int DOOR_SQFT = 20; // Door covers 20 sqft
+		final int WINDOW_SQFT = 15; // Window covers 15sqft
+		int length,width,height,doorAmount,windowAmount; // Declare integers length, width, and height; +door and window amount
+		double totalSqft; // Declare double totalSqFt; 
+		double paintNeeded; // Declare double paintNeeded; 
+		Scanner scan =new Scanner(System.in); // Declare and initialize Scanner object 
+		
+        // Prompt for and read in the length of the room
+		
+        System.out.println("\nEnter length of room: \n"); 
+		length = scan.nextInt();
+		
+        // Prompt for and read in the width of the room
+		
+        System.out.println("\nEnter width of room: \n"); 
+		width = scan.nextInt(); 
+		
+        // Prompt for and read in the height of the room 
+		
+        System.out.println("\nEnter height of room: \n"); 
+		height = scan.nextInt();
+		
+        System.out.println("\nEnter the number of doors in the room: \n"); 
+		doorAmount = scan.nextInt();
+		System.out.println("\nEnter the number of windows in the room: \n"); 
+		windowAmount = scan.nextInt();
+		
+		totalSqft= 2 * ((length * width) + (length * height)+(width * height));
+		
+        // Compute the total square feet to be painted
+		// And think about the dimensions of each wall 
+		// Compute the amount of paint needed 
+		// Print the length, width, and height of the room 
+		// And the number of gallons of paint needed
+		
+        paintNeeded = (totalSqft-(doorAmount*DOOR_SQFT)-(windowAmount * WINDOW_SQFT)) / COVERAGE;
+		 
+		System.out.println("Room Dimensions: "); 
+		System.out.println("----------------- "); 
+		System.out.println("Length:" + length); 
+		System.out.println("Width:" + width); 
+		System.out.println("Height:" + height); 
+		System.out.println("----------------- ");
+		System.out.println("Total Paint Needed:" + paintNeeded);
+	}
+
+}
