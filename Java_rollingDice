@@ -1,0 +1,34 @@
+import java.util.Random;
+
+public class RollingDice
+{
+   
+    public static void main(String[] args) 
+    {
+
+// define the variables to store the first and second roll 
+        int first_roll = RollingDice.generateDiceRoll(1,6);
+        int second_roll = RollingDice.generateDiceRoll(1,6);
+
+// print the random number obtained
+        System.out.println("First dice: " + first_roll);
+        System.out.println("Second dice: "+ second_roll);
+
+// print the sum of random numbers  
+        System.out.println("Sum of both dice rolls: " + (first_roll+ second_roll));
+    
+    }
+   
+// Method to generate a random number using random class.
+
+// Here the range of output (1,6) is passed from main
+
+    public static int generateDiceRoll(int min, int max) 
+    {
+    
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
+    
+    }
+
+}
