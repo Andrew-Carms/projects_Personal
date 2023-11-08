@@ -1,11 +1,9 @@
 import java.util.*;
 import java.text.*;
 
-public class CCBill 
-{
+public class CCBill { 
     
-   public static void main(String[] args)
-   {
+    public static void main(String[] args) {
 
        Scanner sc = new Scanner(System.in);
        NumberFormat defaultFormat = NumberFormat.getCurrencyInstance(Locale.US);
@@ -13,47 +11,42 @@ public class CCBill
        System.out.println("===============================");
        System.out.print("Previous Balance: $"); 
        
-       // Ask the user to enter previous balance
+       // ask the user to enter previous balance
        double prevBalance = sc.nextDouble();
        System.out.print("Additional Charges: $"); // Asking the user to enter additional charges
        double addCharges = sc.nextDouble();
        double interest;
        
-       // Check if previous balance is 0 or not
-       if(prevBalance == 0) 
-       {
+       // check if previous balance is 0 or not
+       if(prevBalance == 0) {
            interest = 0;
        }
-       
-       // If previous balance is greater than 0 then 2% of the total is owed
-       else
-       {
+     
+       // if previous balance is greater than 0 then 2% of the total is owed
+       else {
            interest = (prevBalance + addCharges) * 0.02;
        }
        
-       // Printing the interest
+       // printing the interest
        System.out.println("Interest: " + defaultFormat.format(interest));
        
-       // Calculating new balance
+       // calculating new balance
        double newBalance = prevBalance + addCharges + interest;
        System.out.println("New Balance: " + defaultFormat.format(newBalance));
        double minPayment;
        
-       // Checking if the newBalance is less than 50.
-       if(newBalance < 50) 
-       {
+       // checking if the newBalance is less than 50.
+       if(newBalance < 50) {
            minPayment = newBalance;
        }
        
-       // If newBalance is less than 300 then minimum payment is 50
-       else if(newBalance <= 300) 
-       {
+       // if newBalance is less than 300 then minimum payment is 50
+       else if(newBalance <= 300) {
            minPayment = 50.00;
        }
        
-       //Otherwise the minimum payment is 20% of the new balance
-       else 
-       {
+       // otherwise the minimum payment is 20% of the new balance
+       else {
            minPayment = newBalance * 0.2;
        }
        
