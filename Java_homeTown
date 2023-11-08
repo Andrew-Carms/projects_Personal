@@ -1,0 +1,22 @@
+import java.util.Scanner;
+
+public class homeTown {
+   
+    public static void main (String[] args) {
+       
+        //City and State
+        String city, state, newString;
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("\nEnter your hometown");
+        System.out.print("City: ");
+        city = scan.nextLine();
+        System.out.print("State: ");
+        state = scan.nextLine();
+
+        newString = state.toUpperCase().concat(city.toLowerCase()).concat(state.toUpperCase());
+        System.out.println("\nCombined city + state phrase: " + newString);
+   
+    }
+   
+}
